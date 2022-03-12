@@ -23,23 +23,26 @@ public class Procesos {
 			numero += t[i];
 		}
 		System.out.println("Numero de t's: " + numero);
-
-		while (y < procesos) {
+		while (y < 2) {
 			if (tllegadas[y] > 0) {
 				for (int i = 0; i < tllegadas[y]; i++) {
 					System.out.print("_");
+					cont++;
 				}
 			}
-			//
+			for (int i = 0; i < (cont - tllegadas[y]); i++) {
+				System.out.print("O");
+				cont++;
+			}
 			for (int i = 0; i < t[y]; i++) {
-				System.err.print("X");
+				System.out.print("X");
+				cont++;
 			}
 			for (int i = 0; i < (numero - t[y]); i++) {
 				System.out.print("_");
 			}
 			System.out.println("");
 			y++;
-			cont++;
 		}
 	}
 }
