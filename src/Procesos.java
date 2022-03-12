@@ -7,6 +7,9 @@ public class Procesos {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Cuanto procesos quieres usar:");
 		int procesos = in.nextInt();
+		int numero = 0;
+		int cont = 0;
+		int y = 0;
 		int x = procesos;
 		int[] tllegadas = new int[procesos];
 		int[] t = new int[procesos];
@@ -17,7 +20,26 @@ public class Procesos {
 			t[i] = in.nextInt();
 		}
 		for (int i = 0; i < t.length; i++) {
-			System.out.println("*");
+			numero += t[i];
+		}
+		System.out.println("Numero de t's: " + numero);
+
+		while (y < procesos) {
+			if (tllegadas[y] > 0) {
+				for (int i = 0; i < tllegadas[y]; i++) {
+					System.out.print("_");
+				}
+			}
+			//
+			for (int i = 0; i < t[y]; i++) {
+				System.err.print("X");
+			}
+			for (int i = 0; i < (numero - t[y]); i++) {
+				System.out.print("_");
+			}
+			System.out.println("");
+			y++;
+			cont++;
 		}
 	}
 }
