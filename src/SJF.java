@@ -1,7 +1,6 @@
-
 import java.util.*;
 
-public class FCFS {
+public class SJF {
 	public static void main(String args[]) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Introduce numero de procesos ");
@@ -12,12 +11,11 @@ public class FCFS {
 		int fin[] = new int[n];
 		int Tmas[] = new int[n];
 		int E[] = new int[n];
+		int f[] = new int[n];
 		int y = 0;
-		int temp;
-		int cont = 0;
-		float avgwt = 0;
-		float avgta = 0;
 		int numero = 0;
+		int cont = 0;
+		int st = 0, tot = 0;
 
 		for (int i = 0; i < n; i++) {
 			System.out.println((i + 1) + " Tiempo de llegada: ");
@@ -25,39 +23,30 @@ public class FCFS {
 			System.out.println((i + 1) + " Tiempo");
 			t[i] = sc.nextInt();
 			nprocesos[i] = i + 1;
+			f[i] = 0;
 		}
-
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n - (i + 1); j++) {
-				if (tllegadas[j] > tllegadas[j + 1]) {
-					temp = tllegadas[j];
-					tllegadas[j] = tllegadas[j + 1];
-					tllegadas[j + 1] = temp;
-					temp = t[j];
-					t[j] = t[j + 1];
-					t[j + 1] = temp;
-					temp = nprocesos[j];
-					nprocesos[j] = nprocesos[j + 1];
-					nprocesos[j + 1] = temp;
+		boolean a = true;
+		while (true) {
+			int c = n, min = 999;
+			if (tot == n)
+				break;
+			for (int i = 0; i < n; i++) {
+				if ((tllegadas[i] <= st) && (f[i] == 0) && (t[i] < min)) {
+					min = t[i];
+					c = i;
 				}
 			}
-		}
-
-		for (int i = 0; i < n; i++) {
-			if (i == 0) {
-				fin[i] = tllegadas[i] + t[i];
-			} else {
-				if (tllegadas[i] > fin[i - 1]) {
-					fin[i] = tllegadas[i] + t[i];
-				} else
-					fin[i] = fin[i - 1] + t[i];
+			if (c == n)
+				st++;
+			else {
+				fin[c] = st + t[c];
+				st += t[c];
+				Tmas[c] = fin[c] - tllegadas[c];
+				E[c] = Tmas[c] - t[c];
+				f[c] = 1;
+				tot++;
 			}
-			Tmas[i] = fin[i] - tllegadas[i];
-			E[i] = Tmas[i] - t[i];
-			avgwt += E[i];
-			avgta += Tmas[i];
 		}
-
 		System.out.println("-----------------------------------------------------------");
 		for (int i = 0; i < t.length; i++) {
 			numero += t[i];
@@ -84,5 +73,4 @@ public class FCFS {
 		}
 		System.out.println("-----------------------------------------------------------");
 	}
-
 }
